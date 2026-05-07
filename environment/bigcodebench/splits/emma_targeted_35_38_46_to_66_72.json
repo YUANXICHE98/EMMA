@@ -1,0 +1,11 @@
+{
+  "train_ids": [
+    "BigCodeBench/35",
+    "BigCodeBench/38",
+    "BigCodeBench/46"
+  ],
+  "val_ids": [
+    "BigCodeBench/66",
+    "BigCodeBench/72"
+  ]
+}

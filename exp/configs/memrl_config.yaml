@@ -1,0 +1,25 @@
+# LLM and API configuration.
+# Prefer environment variables over writing secrets here:
+#   EMMA_OPENAI_API_KEY / EMMA_OPENAI_BASE_URL / EMMA_OPENAI_MODEL
+llm:
+  model_name: "gpt-4o-mini"
+  temperature: 0.1
+  api_key: ""
+  base_url: ""
+
+# Embedding configuration.
+encoder:
+  model_name: "text-embedding-3-large"
+
+# 记忆与检索配置
+memory:
+  top_k: 2
+  q_init: 0.0          
+  similarity_threshold: 0.75 
+
+# RL 优化器配置
+rl:
+  alpha: 0.1             # 学习率 (每次更新保留多少旧记忆，0~1之间)
+  gamma: 0.9             # 折扣因子 (用于长程任务的信度衰减，0~1之间)
+  reward_success: 1.0    # 完美通关的全局奖励
+  reward_fail: -1.0      # 任务失败的全局惩罚

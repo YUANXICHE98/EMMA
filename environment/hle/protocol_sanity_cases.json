@@ -1,0 +1,65 @@
+{
+  "cases": [
+    {
+      "id": "sanity_numeric_inline_confidence",
+      "subject": "Math",
+      "answer_type": "exactmatch",
+      "question": "What is the largest prime divisor of 8139881",
+      "gold_answer": "5003",
+      "prediction": "Explanation: factorization gives the largest prime divisor directly. Exact Answer: 5003 Confidence: 95",
+      "expected_correct": true,
+      "expected_equivalence": "should_pass",
+      "notes": "Protocol sanity: inline Confidence should not leak into extracted final answer."
+    },
+    {
+      "id": "sanity_mcq_letter_only",
+      "subject": "General",
+      "answer_type": "multiple_choice",
+      "question": "Which option is correct?",
+      "choices": [
+        "alpha",
+        "beta",
+        "gamma",
+        "delta"
+      ],
+      "gold_answer": "B",
+      "prediction": "Exact Answer: B\nConfidence: 81",
+      "expected_correct": true,
+      "expected_equivalence": "should_pass",
+      "notes": "MCQ letter should resolve to the canonical option text."
+    },
+    {
+      "id": "sanity_empty_exact_answer_inline_confidence",
+      "subject": "Math",
+      "answer_type": "exactmatch",
+      "question": "What is the largest prime divisor of 8139881",
+      "gold_answer": "5003",
+      "prediction": "Explanation: verification: 8139881 = 3803 * 2141 + 0; 3803 primality check: not prime | Exact Answer:  | Confidence: 40",
+      "expected_correct": false,
+      "expected_equivalence": "should_fail_protocol_missing",
+      "notes": "Empty Exact Answer must not extract Confidence as the final answer."
+    },
+    {
+      "id": "sanity_empty_exact_answer_fake_verification",
+      "subject": "Math",
+      "answer_type": "exactmatch",
+      "question": "What is the largest prime divisor of 8139881",
+      "gold_answer": "5003",
+      "prediction": "Explanation: verification: 8139881 = 3803 * 2141 + 0; 3803 primality check: not prime\nExact Answer: \nConfidence: 40",
+      "expected_correct": false,
+      "expected_equivalence": "should_fail_claimed_verification",
+      "notes": "Even when Exact Answer is empty, claimed verification arithmetic should remain auditable."
+    },
+    {
+      "id": "sanity_symbolic_family_local_hard",
+      "subject": "Math",
+      "answer_type": "exactmatch",
+      "question": "Solve for all z in the intended closed form family.",
+      "gold_answer": "z = 1 + 2k, k in Z",
+      "prediction": "Exact Answer: z=1+2k, k\\in\\mathbb{Z}\nConfidence: 90",
+      "expected_correct": true,
+      "expected_equivalence": "likely_local_false_negative",
+      "notes": "Symbolic family formatting case for comparing local_exact_match vs llm_judge."
+    }
+  ]
+}

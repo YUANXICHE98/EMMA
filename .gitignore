@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local environments
+.venv/
+venv/
+env/
+.env
+.env.*
+.conda*/
+**/.conda*/
+
+# Results and logs
+cache/
+**/cache/
+results/
+logs/
+**/results/
+**/logs/
+*.log
+
+# Local research/session state
+codex/
+.sibyl/
+notes/
+plan/
+idea/
+reflection/
+context/
+session_memory.md
+breadcrumb.json
+sentinel_heartbeat.json
+status.json
+
+# Credentials and local config
+config.yaml
+*.local.yaml
+*.secret*
+
+# OS/editor
+.DS_Store
+.vscode/
+.idea/
