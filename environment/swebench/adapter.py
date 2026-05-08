@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -155,6 +156,11 @@ class SWEbenchAdapter(BenchmarkAdapter):
         return instances
 
     def _run_official_harness(self, instance: dict[str, Any], model_patch: str) -> dict[str, Any]:
+        if not self._allow_host_harness():
+            raise RuntimeError(
+                "SWE-bench evaluates model-generated patches. Run it only in an isolated container or sandbox, "
+                "then set EMMA_SWEBENCH_ALLOW_HOST_HARNESS=1 to acknowledge that boundary."
+            )
         python_bin = self.runner_cfg.get("python_bin") or sys.executable
         dataset_name = self.runner_cfg.get("dataset_name", "SWE-bench/SWE-bench_Lite")
         split = self.runner_cfg.get("split", "test")
@@ -230,6 +236,15 @@ class SWEbenchAdapter(BenchmarkAdapter):
             "returncode": completed.returncode,
             "predictions_path": str(predictions_path),
         }
+
+    def _allow_host_harness(self) -> bool:
+        configured = self.runner_cfg.get("allow_host_harness")
+        env_value = (
+            os.environ.get("EMMA_SWEBENCH_ALLOW_HOST_HARNESS")
+            or os.environ.get("MEMRL_SWEBENCH_ALLOW_HOST_HARNESS")
+        )
+        value = env_value if env_value is not None else configured
+        return str(value).strip().lower() in {"1", "true", "yes", "on"}
 
     @staticmethod
     def _build_observation(instance: dict[str, Any]) -> str:

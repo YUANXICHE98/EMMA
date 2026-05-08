@@ -1,5 +1,6 @@
 import json
 import os
+from pathlib import Path
 import numpy as np
 try:
     from termcolor import colored
@@ -12,17 +13,31 @@ class EpisodicMemory:
         """
         情景记忆库：负责存储、合并和管理意图空间中的所有经验
         """
-        self.memory_file = "memrl_memory_dump.json"
+        mem_config = config.get('memory', {}) if isinstance(config, dict) else {}
+        configured_memory_file = (
+            os.environ.get("EMMA_MEMORY_FILE")
+            or os.environ.get("MEMRL_MEMORY_FILE")
+            or mem_config.get("memory_file")
+        )
+        if configured_memory_file:
+            self.memory_file = str(Path(configured_memory_file).expanduser())
+        else:
+            results_dir = Path(
+                os.environ.get("EMMA_RESULTS_DIR")
+                or os.environ.get("MEMRL_RESULTS_DIR")
+                or mem_config.get("results_dir", "results")
+            ).expanduser()
+            self.memory_file = str(results_dir / "emma_memory_dump.json")
+        Path(self.memory_file).parent.mkdir(parents=True, exist_ok=True)
         self.records = self._load_memory()
-        mem_config = config.get('memory', {})
-        
-        # 🔥 核心参数：意图合并阈值。
+
+        # 核心参数：意图合并阈值。
         # 当新任务的 z 与库中某条记忆的 z 相似度大于此值时，判定为同一任务，执行更新而不是新建！
         self.merge_threshold = mem_config.get('merge_threshold', 0.99)
         self.prune_threshold = mem_config.get('prune_threshold', -3.0)
         self.strategy_bonus = mem_config.get('strategy_bonus', 0.4)
 
-        print(colored(f"💾 记忆库已挂载 | 当前容量: {len(self.records)} 条 | 合并阈值: {self.merge_threshold}", "cyan", attrs=['bold']))
+        print(colored(f"💾 记忆库已挂载 | 文件: {self.memory_file} | 当前容量: {len(self.records)} 条 | 合并阈值: {self.merge_threshold}", "cyan", attrs=['bold']))
 
     def _load_memory(self):
         if os.path.exists(self.memory_file):

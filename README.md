@@ -65,6 +65,8 @@ python environment/hle/protocol_sanity_check.py \
 python environment/hle/numeric_boundary_sanity_check.py
 ```
 
+SWE-bench executes model-generated patches through the official harness. Run it only inside an isolated container or sandbox. The adapter refuses host execution unless `EMMA_SWEBENCH_ALLOW_HOST_HARNESS=1` is set.
+
 ## Reproducibility Scope
 
 The default scripts are intended to reproduce the mechanism and protocol checks, not the exact table numbers from the paper. Exact benchmark scores depend on:
@@ -95,6 +97,8 @@ Useful variables:
 ## Release Hygiene
 
 Result folders, logs, virtual environments, local notes, and credentials are intentionally ignored. Before publishing result artifacts, run the audit checks described in `OPEN_SOURCE_AUDIT.md`.
+
+Evaluator-only fields such as HLE gold answers are kept out of public per-episode metadata emitted by the shared runner.
 
 ## License
 

@@ -34,6 +34,15 @@ class ScopedEpisodicMemory(EpisodicMemory):
 
 
 class MemRLBrain:
+    evaluator_only_metadata_keys = {
+        "gold_answer",
+        "correct_answer",
+        "answer",
+        "label",
+        "_evaluator_gold_answer",
+        "_evaluator_only",
+    }
+
     supported_ablation_flags = {
         "memory_enabled",
         "failure_memory_enabled",
@@ -150,6 +159,16 @@ class MemRLBrain:
             if compact:
                 lines.append(f"{key}: {compact}")
         return "\n".join(lines)
+
+    @classmethod
+    def _public_metadata(cls, metadata: dict[str, Any]) -> dict[str, Any]:
+        if not isinstance(metadata, dict):
+            return {}
+        return {
+            key: value
+            for key, value in metadata.items()
+            if key not in cls.evaluator_only_metadata_keys and not str(key).startswith("_evaluator_")
+        }
 
     def _build_secondary_llm(self) -> FrozenLLM | None:
         if not self.routing_enabled:
@@ -612,7 +631,7 @@ class MemRLBrain:
             "task_description": task.task_description,
             "instruction": task.instruction,
             "goal_repr": task.goal_repr,
-            "metadata": task.metadata,
+            "metadata": self._public_metadata(task.metadata),
             "reward": round(float(final_reward_value), 4),
             "success": final_success,
             "steps": len(traces),

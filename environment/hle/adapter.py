@@ -103,7 +103,8 @@ class HLEAdapter(BenchmarkAdapter):
             "subject": subject,
             "subject_family": self._subject_family(subject),
             "choices": choices,
-            "gold_answer": self._gold_answer(record),
+            "_evaluator_gold_answer": self._gold_answer(record),
+            "_evaluator_only": ["_evaluator_gold_answer"],
             "question_only": question,
             "abstract_goal": (
                 "Solve an expert-level closed-ended reasoning task by identifying the correct final answer "
