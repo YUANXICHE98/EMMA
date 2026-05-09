@@ -9,6 +9,7 @@ This repository contains a research implementation of EMMA, a memory-augmented a
 - `exp/modules/`: legacy module implementation for LLM calls, embedding, retrieval, memory persistence, and RL optimization.
 - `environment/hle/open_source_audit.py`: lightweight audit tool for HLE artifacts.
 - `docs/REPRODUCIBILITY.md`: expected reproducibility scope, protocol notes, and why exact paper numbers are not promised by the default smoke runs.
+- `docs/MODEL_PROTOCOL.md`: benchmark-specific model roles for paper-primary runs, baselines, scaling, and release smoke tests.
 - `OPEN_SOURCE_AUDIT.md`: release checklist and HLE-specific audit notes.
 
 ## Design Boundary
@@ -45,6 +46,8 @@ export EMMA_EMBEDDING_BASE_URL="$EMMA_OPENAI_BASE_URL"
 export EMMA_EMBEDDING_MODEL=text-embedding-3-large
 ```
 
+The quickstart model is a low-cost smoke default. It is not the paper-primary solver. For paper-quality runs, choose the benchmark-specific model role in `docs/MODEL_PROTOCOL.md`.
+
 Run an HLE smoke test on the public text-only subset:
 
 ```bash
@@ -78,6 +81,8 @@ The default scripts are intended to reproduce the mechanism and protocol checks,
 - budget, retry, timeout, and sampling settings
 
 This is expected for API-served LLM benchmark experiments. See `docs/REPRODUCIBILITY.md` for the recommended reporting format.
+
+Model roles are explicit in this release: frontier solvers are used for paper-primary runs, `gpt-4-0125-preview` is a legacy baseline, Llama/Qwen are scaling models, and GPT-4o-mini-class / DeepSeek-V3-class models are cost or smoke settings unless explicitly reported.
 
 ## Provider Configuration
 

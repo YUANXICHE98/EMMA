@@ -34,3 +34,4 @@ environment/.conda-intercode/bin/python \
 
 - The SQL Docker image is built from the official package assets and uses the built-in `sql_queries.csv` dataset.
 - Results are written under `environment/intercode_sql/results/`.
+- For paper-primary runs, use a frontier SQL-capable reasoning solver. GPT-4-0125-preview is a legacy baseline; Qwen/DeepSeek-class models are cost or scaling rows unless explicitly reported.

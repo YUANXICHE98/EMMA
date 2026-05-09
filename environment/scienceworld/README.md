@@ -19,3 +19,4 @@ environment/.venv-scienceworld/bin/python \
 - Memory remains benchmark-scoped. ScienceWorld writes its own memory files under `environment/scienceworld/results/`.
 - This adapter depends on the `scienceworld` Python package and a local Java runtime.
 - Task/variation selection is controlled through `environment/scienceworld/config.yaml`.
+- For paper-primary runs, use a frontier general reasoning solver. GPT-4-0125-preview should be treated as a legacy baseline, while Llama/Qwen runs are scaling analysis.

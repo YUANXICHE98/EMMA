@@ -6,6 +6,11 @@ Current scope:
 - execution backend: official remote gradio evaluator
 - optional diagnostic split files under `splits/`
 
+Model role:
+- paper-primary: strongest available coding solver, such as a GPT-5.2-Codex-class model
+- legacy baseline: GPT-4-0125-preview or GPT-4.1-class coding-capable model
+- cost/scaling only: Qwen/DeepSeek coding-capable models, reported separately
+
 Adapter boundary:
 - loads benchmark tasks from the official annotation data
 - exposes each task as one code-generation episode

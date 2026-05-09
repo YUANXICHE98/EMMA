@@ -5,6 +5,11 @@ Current scope:
 - main MemRL path: shared brain + official task environment
 - excluded from main path: official `previous_sample_utilization` and `group_self_consistency`
 
+Model role:
+- paper-primary: frontier agent/reasoning solver
+- legacy baseline: GPT-4-0125-preview
+- scaling: Llama/Qwen families on the same official task boundary
+
 Recommended experiment naming:
 - `official_standard`: official benchmark prompt/task boundary only
 - `official_previous_sample_utilization`: official flat replay-style memory baseline

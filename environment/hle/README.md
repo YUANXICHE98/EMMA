@@ -23,6 +23,10 @@ This adapter treats Humanity's Last Exam as a closed-ended QA benchmark under th
 
 The default is intentionally a public text-only subset so Docker smoke runs do not fail immediately on the official gate.
 
+## Model role
+
+HLE is solver-ceiling sensitive. Use `gpt-5.2` or another strongest available frontier reasoning model for paper-primary HLE runs. Keep `gpt-4-0125-preview` as a legacy comparable baseline. GPT-4o-mini-class, Qwen-32B-class, and DeepSeek-V3-class solvers are appropriate for smoke, ceiling, or cost-efficiency analysis only unless explicitly reported as their own table row.
+
 ## Open-source audit
 
 Before publishing HLE artifacts, run:
@@ -72,6 +76,8 @@ export EMMA_HLE_JUDGE_MODE=local_exact_match
 bash environment/hle/run_hle_docker_smoke.sh
 ```
 
+`gpt-4o-mini` here is a smoke default, not the paper-primary HLE solver.
+
 Mini matrix example:
 
 ```bash
@@ -84,6 +90,8 @@ export EMMA_HLE_JUDGE_MODEL=gpt-4o-2024-08-06
 
 bash environment/hle/run_hle_docker_matrix.sh
 ```
+
+The matrix helper is intended for protocol checks. For paper-quality HLE runs, set `EMMA_OPENAI_MODEL` to the chosen frontier solver and report the solver, judge, protocol, and route separately.
 
 If you intentionally want an expensive solver such as Gemini or GPT-5, you must add:
 

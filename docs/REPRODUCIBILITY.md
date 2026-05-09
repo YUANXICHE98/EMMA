@@ -15,6 +15,8 @@ This repository is released to make the EMMA mechanism inspectable and runnable:
 
 The default smoke commands are not intended to reproduce the exact paper table numbers. They check that the mechanism and benchmark protocol are wired correctly.
 
+See `docs/MODEL_PROTOCOL.md` for the benchmark-specific model roles used to separate paper-primary runs from legacy baselines, scaling analysis, and low-cost smoke tests.
+
 ## Why Exact Scores Can Differ
 
 LLM benchmark scores are sensitive to runtime details that are not fully controlled by source code:
@@ -48,6 +50,10 @@ When reporting a result, include:
 The paper experiments used a fixed internal run configuration and contemporaneous model/provider routes. Reproducing the qualitative EMMA effect should use the same ablation protocol and comparable solver capacity. Reproducing exact absolute scores requires matching the dataset revision, model route, judge mode, and budget settings.
 
 If a run uses a cheaper or weaker solver, lower absolute scores are expected. The mechanism should be evaluated by the relative difference between matched conditions and by inspecting whether retrieved memory is actually rendered into the model context.
+
+The recommended paper wording is:
+
+> Main EMMA results use benchmark-appropriate frontier solvers. GPT-4-0125-preview is retained as a legacy comparable baseline. GPT-4o-mini-class and DeepSeek-V3-class models are used only for low-cost sanity checks or cost-efficiency analysis unless explicitly reported.
 
 ## HLE-Specific Notes
 

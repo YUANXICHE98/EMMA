@@ -17,3 +17,5 @@ This project now treats each benchmark as its own environment package while shar
 - Cross-benchmark memory transfer is a separate experiment, not the default runtime path.
 
 In practice that means each benchmark writes its own memory files under its own `results/` directory, even though all benchmarks call the same EMMA backend loop.
+
+Model selection is benchmark-specific. See `docs/MODEL_PROTOCOL.md`; release defaults are smoke settings, not paper-primary model claims.

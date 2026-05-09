@@ -26,3 +26,5 @@ Adapters translate benchmark episodes into the shared EMMA interface. They shoul
 Benchmark-local verifier outputs are audit signals. Shared EMMA should be evaluated by whether memory is retrieved, rendered, updated, consolidated, and used across matched ablation conditions.
 
 Exact paper scores are configuration-dependent. Release users should expect matched-protocol trends to be more meaningful than matching a single absolute score.
+
+Model naming should follow `docs/MODEL_PROTOCOL.md`: paper-primary frontier solvers are distinct from the legacy GPT-4 baseline, open-model scaling analysis, and low-cost smoke/cost-efficiency runs.
