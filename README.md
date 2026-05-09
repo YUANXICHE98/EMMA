@@ -82,7 +82,7 @@ The default scripts are intended to reproduce the mechanism and protocol checks,
 
 This is expected for API-served LLM benchmark experiments. See `docs/REPRODUCIBILITY.md` for the recommended reporting format.
 
-Model roles are explicit in this release: frontier solvers are used for paper-primary runs, `gpt-4-0125-preview` is a legacy baseline, Llama/Qwen are scaling models, and GPT-4o-mini-class / DeepSeek-V3-class models are cost or smoke settings unless explicitly reported.
+Model roles are explicit in this release: `gpt-5.2` is the default paper-primary family for general/reasoning benchmarks, `gpt-5.2-codex` is the paper-primary family for code benchmarks, `gpt-4-0125-preview` is the legacy baseline, Llama/Qwen are scaling models, and DeepSeek/GPT-4o-mini-class models are cost or smoke settings unless explicitly reported.
 
 ## Provider Configuration
 

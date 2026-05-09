@@ -7,8 +7,9 @@ Current scope:
 - optional diagnostic split files under `splits/`
 
 Model role:
-- paper-primary: strongest available coding solver, such as a GPT-5.2-Codex-class model
+- paper-primary: `gpt-5.2-codex` or strongest available coding solver
 - legacy baseline: GPT-4-0125-preview or GPT-4.1-class coding-capable model
+- cross-validation: Claude Sonnet 4.5
 - cost/scaling only: Qwen/DeepSeek coding-capable models, reported separately
 
 Adapter boundary:

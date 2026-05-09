@@ -25,7 +25,7 @@ The default is intentionally a public text-only subset so Docker smoke runs do n
 
 ## Model role
 
-HLE is solver-ceiling sensitive. Use `gpt-5.2` or another strongest available frontier reasoning model for paper-primary HLE runs. Keep `gpt-4-0125-preview` as a legacy comparable baseline. GPT-4o-mini-class, Qwen-32B-class, and DeepSeek-V3-class solvers are appropriate for smoke, ceiling, or cost-efficiency analysis only unless explicitly reported as their own table row.
+HLE is solver-ceiling sensitive. Use `gpt-5.2` or another strongest available frontier reasoning model for paper-primary HLE runs, with high-reasoning settings when the provider exposes them. Keep `gpt-4-0125-preview` as a legacy comparable baseline. Claude Opus 4.5 can be used as external cross-validation. GPT-4o-mini-class, Qwen-32B-class, and DeepSeek-V3-class solvers are appropriate for smoke, ceiling, or cost-efficiency analysis only unless explicitly reported as their own table row.
 
 ## Open-source audit
 

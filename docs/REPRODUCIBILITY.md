@@ -53,7 +53,7 @@ If a run uses a cheaper or weaker solver, lower absolute scores are expected. Th
 
 The recommended paper wording is:
 
-> Main EMMA results use benchmark-appropriate frontier solvers. GPT-4-0125-preview is retained as a legacy comparable baseline. GPT-4o-mini-class and DeepSeek-V3-class models are used only for low-cost sanity checks or cost-efficiency analysis unless explicitly reported.
+> Main EMMA results use GPT-5.2-family models for general/reasoning benchmarks and GPT-5.2-Codex-family models for code benchmarks. GPT-4-0125-preview is retained as a legacy comparable baseline. GPT-4o-mini-class and DeepSeek-V3-class models are used only for low-cost sanity checks or cost-efficiency analysis unless explicitly reported.
 
 ## HLE-Specific Notes
 

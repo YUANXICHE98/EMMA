@@ -1,38 +1,45 @@
 # Model Protocol
 
-This release separates three model roles:
+This release separates code defaults from paper-model claims. The repository defaults are low-cost smoke settings. Paper-quality runs should use benchmark-appropriate frontier solvers and explicitly report solver, judge, provider route, API protocol, and budget.
 
-- **paper primary**: models used for main paper-quality runs
-- **legacy baseline**: older GPT-4-class runs retained for comparison
-- **release smoke**: low-cost defaults used only to check that the code path works
+## Model Role Table
 
-The code defaults to low-cost smoke settings where possible. Those defaults are not paper-primary settings.
+| Role | Recommended model(s) | Paper wording |
+| --- | --- | --- |
+| Main experimental primary | `gpt-5.2` | EMMA main results are reported with GPT-5.2 unless otherwise specified. |
+| Code benchmark primary | `gpt-5.2-codex` | Used for code-generation and software-engineering benchmarks. |
+| Strong external validation | Claude Opus 4.5 / Claude Sonnet 4.5 | Used as external frontier-model validation, not the default primary. |
+| Historical comparable baseline | `gpt-4-0125-preview` | Legacy GPT-4 baseline retained for comparison with prior MemRL / GPT-4-class settings. |
+| Scaling analysis | Llama-3.1 8B/70B, Qwen-2.5 14B/32B | Open / smaller-model scaling analysis. |
+| Cost-efficiency appendix | GPT-4.1 mini-class, DeepSeek-V3.2-Exp-class, Qwen-32B-class | Low-cost replication only; not main claims. |
+| Not recommended as primary | GPT-4o-mini-class, DeepSeek-R1 | Cheap/cost baseline only; do not describe as primary. |
 
-## Recommended Paper-Quality Matrix
+## Benchmark Model Plan
 
-| Benchmark | Paper-primary solver | Legacy / baseline solver | Scaling / cost-only solvers | Notes |
-| --- | --- | --- | --- | --- |
-| HLE | `gpt-5.2` or stronger frontier reasoning model | `gpt-4-0125-preview` | `qwen2.5-32b-instruct`, DeepSeek-V3-class, GPT-4o-mini-class | HLE is solver-ceiling sensitive. Use weak/cheap solvers only for ceiling and cost analysis. |
-| BigCodeBench | `gpt-5.2-codex` or strongest available coding model | `gpt-4-0125-preview`, GPT-4.1-class | Qwen-32B-coder-class, DeepSeek-V3-class | Code benchmarks should use coding-capable solvers for main claims. |
-| SWE-bench | `gpt-5.2-codex` or strongest available coding agent model | GPT-4.1-class, Claude Sonnet-class | Open coding models | Run only in an isolated container or sandbox. |
-| ALFWorld | `gpt-5.2` or frontier general agent model | `gpt-4-0125-preview` | Llama-3.1 8B/70B, Qwen-2.5 14B/32B | Use matched conditions to measure memory effects. |
-| ScienceWorld | `gpt-5.2` or frontier science/reasoning model | `gpt-4-0125-preview` | Llama-3.1 8B/70B, Qwen-2.5 14B/32B | General reasoning and environment interaction benchmark. |
-| LLB-OS / LifelongAgentBench | `gpt-5.2` or frontier agent model | `gpt-4-0125-preview` | Llama/Qwen scaling models | Keep official task boundary unchanged. |
-| InterCode-SQL / LLB-DB | `gpt-5.2` or strongest SQL-capable frontier model | `gpt-4-0125-preview`, GPT-4.1-class | Qwen-32B-class | Report DB engine, dataset split, and judge/evaluator mode. |
+| Benchmark | EMMA primary model | Baseline / comparison | Notes |
+| --- | --- | --- | --- |
+| HLE | `gpt-5.2` or stronger frontier reasoning model; use high-reasoning settings when available | `gpt-4-0125-preview`; Claude Opus 4.5 as cross-validation | HLE is solver-ceiling sensitive. Weak/cheap solvers should be framed as ceiling or cost analysis. |
+| BigCodeBench | `gpt-5.2-codex` | GPT-4.1-class, `gpt-4-0125-preview`, Claude Sonnet 4.5 | Do not use DeepSeek-R1 as the main BigCodeBench solver. |
+| SWE-bench / code-agent benchmarks | `gpt-5.2-codex` | Claude Sonnet 4.5, `gpt-5.2` | Codex-class models are the most appropriate primary for software-engineering benchmarks. |
+| ALFWorld | `gpt-5.2` with medium reasoning settings | `gpt-4-0125-preview`; Llama/Qwen scaling | Main signal is memory-guided action trajectories; Codex is not required. |
+| ScienceWorld | `gpt-5.2` with medium/high reasoning settings | `gpt-4-0125-preview`; Qwen-32B / Llama-70B scaling | Scientific reasoning plus environment interaction. |
+| LLB-OS / LifelongAgentBench | `gpt-5.2` or Claude Sonnet 4.5 | `gpt-4-0125-preview`; Qwen/Llama scaling | Long-horizon agent benchmark; emphasize memory loop under the official task boundary. |
+| LLB-DB / InterCode-SQL | `gpt-5.2` | GPT-4.1-class, `gpt-4-0125-preview`, Qwen-32B-class | SQL/DB tasks emphasize instruction following and symbolic consistency. |
+| WebArena / OSWorld, if retained | Claude Sonnet 4.5 or `gpt-5.2` | `gpt-4-0125-preview` | Treat as external generalization unless included in the main table. |
 
-## Naming Rules For The Paper
+## Paper Wording Fixes
 
-Use one consistent convention:
+| Original inconsistency | Recommended wording |
+| --- | --- |
+| "GPT-4 class models" | "frontier API models" |
+| "GPT-4 for main experiments" | "GPT-4-0125-preview is retained as a legacy baseline; main EMMA runs use GPT-5.2-family models." |
+| "GPT-4 and GPT-4o-mini served as the primary models" | "GPT-4-0125-preview served as the legacy comparable baseline; GPT-4o-mini was used only for low-cost sanity/cost analysis." |
+| DeepSeek-V3 appears only once as cost-efficiency validation | Either remove it, or write "cost-efficiency appendix only; not used for main claims." |
+| GPT-4o-mini described as comparable quality | Avoid this. Use "lower-cost replication with expected lower absolute scores." |
 
-- Main results: **frontier primary model**, benchmark-specific as listed above.
-- GPT-4 legacy: `gpt-4-0125-preview` is a historical baseline, not the current primary solver.
-- GPT-4o-mini-class models: release smoke and low-cost sanity only.
-- DeepSeek-V3-class models: cost-efficiency or secondary validation only unless an explicit benchmark table reports them.
-- Llama/Qwen: scaling analysis only.
+## Recommended One-Sentence Policy
 
-Avoid saying "GPT-4 and GPT-4o-mini served as the primary models" unless both are actually reported as primary in the same main table. Prefer:
-
-> Main EMMA results use benchmark-appropriate frontier solvers. GPT-4-0125-preview is retained as a legacy comparable baseline. GPT-4o-mini-class and DeepSeek-V3-class models are used only for low-cost sanity checks or cost-efficiency analysis unless explicitly reported.
+Use `gpt-5.2` for general/reasoning benchmarks, `gpt-5.2-codex` for code benchmarks, `gpt-4-0125-preview` as the legacy baseline, Llama/Qwen for scaling, and DeepSeek/GPT-4o-mini-class models only for the cost-efficiency appendix or smoke tests.
 
 ## Code Defaults
 
